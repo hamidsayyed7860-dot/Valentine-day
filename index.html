@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Valentine 💗</title>
+
+<style>
+body{
+    background:#ffd6e0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-family:'Poppins',sans-serif;
+    margin:0;
+    overflow:hidden;
+}
+.outer-border{
+    border:2px solid white;
+    border-radius:24px;
+    padding:8px;
+}
+.card{
+    background:white;
+    padding:30px 40px;
+    border-radius:18px;
+    text-align:center;
+    box-shadow:0 15px 30px rgba(0,0,0,.2);
+    animation:pop .8s ease;
+    max-width:340px;
+}
+h1{color:#ff4d6d;font-weight:bold;}
+p{font-size:18px;color:#333;}
+button{
+    padding:10px 25px;
+    border:none;
+    border-radius:20px;
+    font-size:16px;
+    cursor:pointer;
+    margin-top:15px;
+    background:#ff4d6d;
+    color:white;
+}
+@keyframes pop{
+    from{transform:scale(.7);opacity:0}
+    to{transform:scale(1);opacity:1}
+}
+.rose{
+    position:absolute;
+    bottom:-60px;
+    font-size:28px;
+    animation:floatUp 6s linear infinite;
+}
+@keyframes floatUp{
+    0%{transform:translateY(0);opacity:0}
+    20%{opacity:.8}
+    100%{transform:translateY(-110vh) rotate(360deg);opacity:0}
+}
+</style>
+</head>
+
+<body>
+<div id="app"></div>
+
+<script>
+/* QUESTION */
+function showQuestion(){
+    document.getElementById("app").innerHTML=`
+    <div class="outer-border">
+      <div class="card">
+        <h1>Will you be my Valentine?</h1>
+        <button onclick="yesClicked()">YES 💕</button><br>
+        <button onclick="noClicked()" style="background:#999">NO 🙃</button>
+      </div>
+    </div>`;
+}
+
+/* YES */
+function yesClicked(){
+    showProcessing("yes");
+}
+
+/* NO */
+function noClicked(){
+    showProcessing("no");
+}
+
+/* PROCESSING (COMMON) */
+function showProcessing(type){
+    document.getElementById("app").innerHTML=`
+    <div class="outer-border">
+      <div class="card">
+        <h1>Processing… 💗</h1>
+        <p>Please wait 😌</p>
+      </div>
+    </div>`;
+    
+    setTimeout(()=>{
+        if(type==="yes"){
+            showConfidenceSlide();
+        }else{
+            showQuestion();
+        }
+    },2000);
+}
+
+/* CONFIDENCE */
+function showConfidenceSlide(){
+    document.getElementById("app").innerHTML=`
+    <div class="outer-border">
+      <div class="card">
+        <p style="font-size:19px">
+          I know ki you gonna say <b>YES</b> babe 💗
+        </p>
+      </div>
+    </div>`;
+    setTimeout(showFinal,2200);
+}
+
+/* FINAL YES */
+function showFinal(){
+    document.getElementById("app").innerHTML=`
+    <div class="outer-border">
+      <div class="card">
+        <h1>Yayyy 💖</h1>
+        <p>
+          You just made my Valentine perfect ✨
+        </p>
+      </div>
+    </div>`;
+    createRoses();
+    setTimeout(showQuotes,10000);
+}
+
+/* QUOTES */
+const quotes=[
+"I’m not saying you’re my Valentine… but I’m also not giving you a choice 😌",
+"If liking you was a crime, I’d happily serve a life sentence.",
+"You feel like that calm song I didn’t know I needed.",
+"If comfort had a face, it would look a lot like you.",
+"Low battery, high feelings for you 💗",
+"Not perfect, but perfectly yours 😌",
+"I wasn't planning to fall... then you smiled",
+"Guess what? This YES made my day"
+];
+let q=0;
+
+function showQuotes(){
+    q=0;
+    document.getElementById("app").innerHTML=`
+    <div class="outer-border">
+      <div class="card">
+        <p id="quote">${quotes[0]}</p>
+        <button onclick="nextQuote()">NEXT ➜</button>
+      </div>
+    </div>`;
+}
+
+function nextQuote(){
+    q++;
+    if(q<quotes.length){
+        document.getElementById("quote").innerText=quotes[q];
+    }else{
+        endSlide();
+    }
+}
+
+/* END */
+function endSlide(){
+    document.getElementById("app").innerHTML=`
+    <div class="outer-border">
+      <div class="card">
+        <h1>💗💗💗</h1>
+        <p>
+          And that's how<br>
+          our valentine story started 😋💗
+          <br>
+          happy valentine day
+        </p>
+      </div>
+    </div>`;
+}
+
+/* ROSES */
+function createRoses(){
+    for(let i=0;i<12;i++){
+        let r=document.createElement("div");
+        r.className="rose";
+        r.innerHTML="🤍🌹";
+        r.style.left=Math.random()*100+"vw";
+        document.body.appendChild(r);
+    }
+}
+
+showQuestion();
+</script>
+</body>
+</html>
